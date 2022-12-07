@@ -7,3 +7,4 @@
 /CleanyNextJS/.env.local
 /CleanyDjango/.env
 .idea/
+.vscode/
