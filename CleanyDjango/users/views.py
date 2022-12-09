@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.status import HTTP_403_FORBIDDEN
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer, CustomUserCreateSerializer, CustomUserUpdateSerializer, \
@@ -12,6 +13,7 @@ from users.serializers import CustomUserSerializer, CustomUserCreateSerializer, 
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -40,7 +42,6 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
 class CustomUserVerifyEmailView(APIView):
-
     def get(self, request, token, *args, **kwargs):
         try:
             user = CustomUser.objects.get(token=self.request.data['token'])
@@ -52,6 +53,7 @@ class CustomUserVerifyEmailView(APIView):
 
 
 class GetUserInformation(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def put(self, request, *args, **kwargs):
         user = self.request.user
@@ -89,6 +91,7 @@ class RestorePasswordWithEmail(APIView):
 
 
 class ChangePassword(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def put(self, request, *args, **kwargs):
         user = self.request.user

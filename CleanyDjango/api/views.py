@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from api.models import Order, ExtraService, BasicService, Cleaner, TypeOfCleaning, Frequency, CleaningTime, \
     CleanerCalendar, DiscountCode
@@ -10,6 +10,8 @@ from api.serializers import OrderSerializer, OrderCreateSerializer, ExtraService
 
 
 class CheckDiscountCodeAPIView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
     queryset = DiscountCode.objects.all()
     serializer_class = DiscountCodeSerializer
     http_method_names = ['get']
@@ -76,6 +78,8 @@ class BasicServiceViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     http_method_names = ['get', 'post']
