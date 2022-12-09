@@ -11,3 +11,5 @@
 /CleanyDjango/static/
 /CleanyDjango/CleaningDjango/.settings.py.swp
 /CleanyNextJS/yarn-error.log
+/CleanyDjango/env/
+/CleanyNextJS/package-lock.json
