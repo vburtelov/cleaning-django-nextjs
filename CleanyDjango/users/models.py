@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from simple_history.models import HistoricalRecords
 
 from .managers import CustomUserManager
 
@@ -8,10 +9,8 @@ from django.contrib.auth.models import Group
 
 class CustomGroup(Group):
     pass
-
     def __str__(self):
         return f'{self.name}'
-
     class Meta:
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
@@ -36,6 +35,8 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['name', 'surname', 'phone_number']
 
     objects = CustomUserManager()
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.surname} {self.name}'

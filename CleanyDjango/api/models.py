@@ -2,10 +2,12 @@ import datetime
 
 from django.conf import settings
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 
 class BasicService(models.Model):
     name = models.CharField(max_length=45, verbose_name="Название")
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -18,6 +20,7 @@ class BasicService(models.Model):
 class ExtraService(models.Model):
     name = models.CharField(max_length=45, verbose_name="Название")
     price = models.IntegerField(verbose_name="Цена", default=0)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -33,6 +36,7 @@ class DiscountCode(models.Model):
     discount = models.IntegerField(verbose_name="Скидка", default=0)
     number_of_uses = models.IntegerField(default=0, verbose_name="Количество использований")
     is_active = models.BooleanField(default=False, verbose_name="Активный")
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -49,6 +53,7 @@ class Cleaner(models.Model):
     rating = models.FloatField(verbose_name="Рейтинг")
     phone_number = models.CharField(max_length=45, verbose_name="Номер телефона")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -63,6 +68,7 @@ class TypeOfCleaning(models.Model):
     price_per_meter = models.IntegerField(verbose_name="Цена за квадратный метр")
     basic_services = models.ManyToManyField(BasicService, verbose_name="Доступные базовые услуги")
     extra_services = models.ManyToManyField(ExtraService, verbose_name="Доступные дополнительные услуги")
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -74,6 +80,7 @@ class TypeOfCleaning(models.Model):
 
 class Frequency(models.Model):
     name = models.CharField(max_length=45)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.name}'
@@ -85,6 +92,7 @@ class Frequency(models.Model):
 
 class CleaningTime(models.Model):
     time = models.TimeField(verbose_name="Время уборки")
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.time}'
@@ -149,6 +157,7 @@ class Order(models.Model):
 
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'Заказ на {self.street} {self.date}'
@@ -178,6 +187,7 @@ class CleanerCalendar(models.Model):
         verbose_name="Заказ"
 
     )
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.cleaner} {self.date} {self.time} {self.order}'
