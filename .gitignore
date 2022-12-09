@@ -8,3 +8,6 @@
 /CleanyDjango/.env
 .idea/
 .vscode/
+/CleanyDjango/static/
+/CleanyDjango/CleaningDjango/.settings.py.swp
+/CleanyNextJS/yarn-error.log
