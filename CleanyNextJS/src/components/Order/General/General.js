@@ -43,7 +43,7 @@ const validationSchema = yup.object({
   apartment: yup
     .string()
     .trim()
-    .min(2, 'Минимальная длина 2 символа')
+    .min(1, 'Минимальная длина 1 символ')
     .max(10, 'Максимальная длина номера квартиры 10 символов')
     .required('Пожалуйста, введите номер квартиры'),
   date: yup
