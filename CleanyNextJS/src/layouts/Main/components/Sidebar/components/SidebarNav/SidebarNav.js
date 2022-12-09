@@ -25,8 +25,8 @@ const SidebarNav = ({colorInvert}) => {
                 component={'img'}
                 src={
                   mode === 'light'
-                      ? 'https://svgshare.com/i/oQ7.svg'
-                      : 'https://svgshare.com/i/oQ8.svg'
+                      ? 'https://gist.githubusercontent.com/vburtelov/489144770ad1cab60de77bda0ae73141/raw/79f8da8684b0a48235d112ddc4d18db296bf4814/logo-negative.svg'
+                      : 'https://gist.githubusercontent.com/vburtelov/489144770ad1cab60de77bda0ae73141/raw/57c939bd9756e806cf843435929096dee5507b1f/logo.svg'
                 }
                 height={1}
                 width={1}
@@ -78,19 +78,19 @@ const SidebarNav = ({colorInvert}) => {
               Контакты
             </Link>
           </Box>
-          </Box>
-          <Box marginTop={1}>
-            <Button
-                size={'large'}
-                variant="contained"
-                color="primary"
-                fullWidth
-                component="a"
-                target="blank"
-                href="/order"
-            >
-              Заказать
-            </Button>
+        </Box>
+        <Box marginTop={1}>
+          <Button
+              size={'large'}
+              variant="contained"
+              color="primary"
+              fullWidth
+              component="a"
+              target="blank"
+              href="/order"
+          >
+            Заказать
+          </Button>
         </Box>
       </Box>
   );
