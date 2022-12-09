@@ -1,5 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
+from simple_history.admin import SimpleHistoryAdmin
 
 from users.models import CustomUser, CustomGroup
 from django.contrib.auth.models import Group
@@ -14,7 +15,7 @@ class GroupAdmin(ImportExportModelAdmin):
 
 
 @admin.register(CustomUser)
-class CustomUserAdmin(ImportExportModelAdmin):
+class CustomUserAdmin(SimpleHistoryAdmin):
     list_display = ('id', 'name', 'surname', 'email', 'is_superuser',)
     list_filter = ('is_superuser', 'is_staff', )
     search_fields = ('name', 'surname', 'email',)
