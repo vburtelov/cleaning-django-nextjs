@@ -5,13 +5,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView, TokenBlacklistView, TokenVerifyView,
 )
 
-from users.views import CustomUserViewSet, GetUserInformation, ChangePassword
+from users.views import CustomUserViewSet, GetUserInformation, ChangePassword, CustomUserVerifyEmailView
 
 router = routers.DefaultRouter()
 router.register('', CustomUserViewSet, 'CustomUser')
 
 urlpatterns = [
     path('me/', GetUserInformation.as_view(), name='me'),
+    path('me/verify/', CustomUserVerifyEmailView.as_view(), name='verify_email'),
     path('me/changepass/', ChangePassword.as_view(), name='change_password'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
