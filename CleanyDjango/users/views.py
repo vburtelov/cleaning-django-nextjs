@@ -1,19 +1,20 @@
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.status import HTTP_403_FORBIDDEN
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer, CustomUserCreateSerializer, CustomUserUpdateSerializer, \
     CustomUserUpdatePasswordSerializer
+from users.task import send_verification_email
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -26,30 +27,32 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         if 'password' in self.request.data:
             password = make_password(self.request.data['password'])
-            serializer.save(password=password)
+            user = serializer.save(password=password)
+            send_verification_email.delay(user_id=user.pk,
+                                          confirmation_token=default_token_generator.make_token(user),
+                                          receiver=self.request.data['email'],
+                                          sender=settings.DEFAULT_FROM_EMAIL)
         else:
             serializer.save()
 
     def create(self, request, *args, **kwargs):
-        send_mail(
-            'Подтвердите ваш email',
-            'Ссылка для подтверждения',
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[request.data['email'], ],
-            fail_silently=False,
-        )
         return super().create(request, *args, **kwargs)
 
 
 class CustomUserVerifyEmailView(APIView):
-    def get(self, request, token, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.GET['user_id']
+        confirmation_token = self.request.GET['confirmation_token']
         try:
-            user = CustomUser.objects.get(token=self.request.data['token'])
-        except CustomUser.DoesNotExist:
-            return Response({'error': 'Пользователь не найден'}, status=HTTP_403_FORBIDDEN)
+            user = CustomUser.objects.get(pk=user_id)
+        except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+            return Response('Пользователь не найден', status=HTTP_400_BAD_REQUEST)
+        if not default_token_generator.check_token(user, confirmation_token):
+            return Response('Токен не валиден, Пожалуйста запросите новое пиьсмо с подтверждением',
+                            status=HTTP_400_BAD_REQUEST)
         user.is_active = True
         user.save()
-        return Response({'success': 'Пользователь активирован'})
+        return Response('Почта успешно подтверждена')
 
 
 class GetUserInformation(APIView):
