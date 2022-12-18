@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  pg:
+    image: postgres
+    ports :
+      - "5432:5432"
+    environment:
+        POSTGRES_PASSWORD: Test123456
+        POSTGRES_USER: cleany_db_user
+        POSTGRES_DB: cleany_db
+
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  redis:
+    image: redis
+    restart: always
+
+  django:
+    restart: always
+    build: ./CleanyDjango
+    volumes:
+      - ./CleanyDjango:/app/CleanyDjango
+    ports:
+      - "8000:8000"
+    command: [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+    depends_on:
+      - pg
+      - redis
+
+  nextjs:
+    restart: always
+    build: ./CleanyNextJS
+    volumes:
+      - node-modules:/app/CleanyNextJS/node_modules
+    ports:
+      - "3000:3000"
+    command: [ "npm", "run", "start" ]
+
+  proxy:
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "7777:7777"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./CleanyDjango/static:/app/CleanyDjango/static
+    depends_on:
+      - nextjs
+      - django
+
+  worker:
+    build:
+      context: ./CleanyDjango
+    volumes:
+      - ./CleanyDjango:/app/CleanyDjango
+    command: celery -A CleaningDjango worker -l info
+    depends_on:
+      - redis
+      - django
+
+
+volumes:
+  node-modules:
+  pgdata:
