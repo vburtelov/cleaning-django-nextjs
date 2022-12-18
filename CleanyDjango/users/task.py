@@ -6,7 +6,7 @@ from django.conf import settings
 
 @shared_task()
 def send_verification_email(user_id, confirmation_token, receiver, sender):
-    activation_link = f'{settings.FRONT_BASE_URL}/account/verify/?user_id={user_id}&confirmation_token={confirmation_token}'
+    activation_link = f'{settings.FRONT_BASE_URL}/login/?user_id={user_id}&confirmation_token={confirmation_token}'
     subject = "Cleany | Подтвердите почту"
     message = "Подтвердите вашу почту: " + activation_link
     time.sleep(20)
