@@ -27,6 +27,7 @@ MarkupPy==1.14
 odfpy==1.4.1
 openpyxl==3.0.10
 prompt-toolkit==3.0.36
+psycopg2-binary==2.9.5
 pycparser==2.21
 PyJWT==2.6.0
 pytz==2022.6
