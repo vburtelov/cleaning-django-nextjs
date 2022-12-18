@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { BASE_URL } from '../../../constants';
+import {SERVER_URL} from '../../../constants';
 import { setCookie } from 'cookies-next';
 
 export default async function(req, res) {
   const { email, password } = req.body;
   if (email && password) {
-    const axiosResponse = await axios.post(`${BASE_URL}/users/token/`, {
+    const axiosResponse = await axios.post(`${SERVER_URL}/users/token/`, {
       email,
       password,
     }).catch((err) => {
