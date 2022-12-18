@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../constants';
+import {BASE_URL, SERVER_URL} from '../constants';
 import {
   LOGIN_WITH_EMAIL_FAIL,
   LOGIN_WITH_EMAIL_LOADING,
@@ -20,7 +20,10 @@ import {
   VERIFY_TOKEN_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  REGISTER_LOADING
+  REGISTER_LOADING,
+  EMAIL_VERIFY_LOADING,
+  EMAIL_VERIFY_SUCCESS,
+  EMAIL_VERIFY_FAIL
 } from '../slices/authSlice';
 import { batch } from 'react-redux';
 import { getAvaliableFrequency, getAvaliableTimes, getAvaliableTypes } from './orderActions';
@@ -46,6 +49,24 @@ export const changeUserPassword = (values) => async (dispatch, getState) => {
   }
 
 };
+
+
+export const verifyEmail = (query) => async (dispatch) => {
+    dispatch(EMAIL_VERIFY_LOADING());
+    const {user_id, confirmation_token} = query;
+    await axios.get(`${BASE_URL}/users/me/verify/`, {
+        params: {
+            'user_id': user_id,
+            'confirmation_token': confirmation_token
+        }
+    })
+        .then((response) => {
+        dispatch(EMAIL_VERIFY_SUCCESS(response.data));
+        })
+        .catch(() => {
+        dispatch(EMAIL_VERIFY_FAIL('Ошибка при верификации почты'));
+        });
+}
 
 
 export const editUser = (values) => async (dispatch, getState) => {
