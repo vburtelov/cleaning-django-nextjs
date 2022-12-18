@@ -1,7 +1,5 @@
 /CleanyNextJS/.next/
 /CleanyNextJS/node_modules/
-/CleanyDjango/users/migrations/
-/CleanyDjango/api/migrations/
 /CleanyDjango/db.sqlite3
 /CleanyDjango/venv/
 /CleanyNextJS/.env.local
