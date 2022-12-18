@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../../../constants';
+import {SERVER_URL} from '../../../constants';
 import { getCookie, deleteCookie, setCookie } from 'cookies-next';
 
 export default async function(req, res) {
@@ -7,7 +7,7 @@ export default async function(req, res) {
     const access = getCookie('access', { req, res });
     const refresh = getCookie('refresh', { req, res });
     if (access && refresh) {
-      const axiosResponseVerifyAccess = await axios.post(`${BASE_URL}/users/token/verify/`,
+      const axiosResponseVerifyAccess = await axios.post(`${SERVER_URL}/users/token/verify/`,
         { token: access },
       ).catch((err) => {
         return err.response;
@@ -20,13 +20,13 @@ export default async function(req, res) {
             refresh: refresh,
           });
       } else {
-        const axiosResponseVerifyRefresh = await axios.post(`${BASE_URL}/users/token/verify/`, {
+        const axiosResponseVerifyRefresh = await axios.post(`${SERVER_URL}/users/token/verify/`, {
           token: refresh,
         }).catch((err) => {
           return err.response;
         });
         if (axiosResponseVerifyRefresh.status === 200) {
-          const axiosResponseRefresh = await axios.post(`${BASE_URL}/users/token/refresh/`, {
+          const axiosResponseRefresh = await axios.post(`${SERVER_URL}/users/token/refresh/`, {
             refresh: refresh,
           }).catch((err) => {
             return err.response;
