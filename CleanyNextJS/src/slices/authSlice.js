@@ -11,6 +11,7 @@ const initialState = {
     editPassword: null,
     editUser: null,
     register: null,
+    verify: null,
   },
   errors: {
     login: null,
@@ -89,6 +90,24 @@ export const authSlice = createSlice({
       state.errors = initialState.errors;
       state.appLoaded = true;
       state.success = initialState.success;
+    },
+    EMAIL_VERIFY_LOADING: (state) => {
+        state.isLoading = true;
+        state.appLoaded = false;
+        state.errors = initialState.errors;
+        state.success = initialState.success;
+    },
+    EMAIL_VERIFY_SUCCESS: (state, action) => {
+        state.isLoading = false;
+        state.appLoaded = true;
+        state.errors = initialState.errors;
+        state.success.verify = true;
+    },
+    EMAIL_VERIFY_FAIL: (state, action) => {
+        state.isLoading = false;
+        state.appLoaded = true;
+        state.errors.verify = action.payload;
+        state.success = initialState.success;
     },
     LOGOUT_SUCCESS: (state) => {
       state.isAuthenticated = false;
@@ -202,7 +221,10 @@ export const {
   USER_PASSWORD_CHANGE_LOADING,
   REGISTER_FAIL,
   REGISTER_LOADING,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  EMAIL_VERIFY_LOADING,
+  EMAIL_VERIFY_SUCCESS,
+  EMAIL_VERIFY_FAIL
 } = authSlice.actions;
 
 export default authSlice.reducer;
