@@ -10,12 +10,12 @@ admin.site.unregister(Group)
 
 
 @admin.register(CustomGroup)
-class GroupAdmin(ImportExportModelAdmin):
+class GroupAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name')
 
 
 @admin.register(CustomUser)
-class CustomUserAdmin(SimpleHistoryAdmin):
+class CustomUserAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name', 'surname', 'email', 'is_superuser',)
     list_filter = ('is_superuser', 'is_staff', )
     search_fields = ('name', 'surname', 'email',)

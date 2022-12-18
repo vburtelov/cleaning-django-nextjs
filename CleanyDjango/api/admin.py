@@ -6,7 +6,7 @@ from api.models import Order, Cleaner, ExtraService, DiscountCode, TypeOfCleanin
 
 
 @admin.register(Cleaner)
-class CleanerAdmin(SimpleHistoryAdmin):
+class CleanerAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name', 'number_of_sweeps', 'rating', 'is_active',)
     list_filter = ('rating', 'is_active',)
     search_fields = ('name', 'rating',)
@@ -22,7 +22,7 @@ class CleanerAdmin(SimpleHistoryAdmin):
 
 
 @admin.register(Order)
-class OrderAdmin(SimpleHistoryAdmin):
+class OrderAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'date', 'city', 'street', 'type', 'square', 'cleaner', 'status',)
     list_filter = ('date', 'type', 'square', 'cleaner', 'status',)
 
@@ -38,44 +38,44 @@ class OrderAdmin(SimpleHistoryAdmin):
 
 
 @admin.register(CleaningTime)
-class OrderAdmin(SimpleHistoryAdmin):
+class OrderAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'time',)
 
 
 @admin.register(CleanerCalendar)
-class CleanerCalendarAdmin(SimpleHistoryAdmin):
+class CleanerCalendarAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'cleaner', 'date', 'time', 'order',)
     list_filter = ('cleaner', 'date', 'time', 'order',)
 
 
 @admin.register(BasicService)
-class ExtraServiceAdmin(SimpleHistoryAdmin):
+class ExtraServiceAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name',)
     search_fields = ('name',)
 
 
 @admin.register(ExtraService)
-class ExtraServiceAdmin(SimpleHistoryAdmin):
+class ExtraServiceAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name', 'price',)
     search_fields = ('name',)
     list_filter = ('price',)
 
 
 @admin.register(TypeOfCleaning)
-class TypeOfCleaningAdmin(SimpleHistoryAdmin):
+class TypeOfCleaningAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name', 'price_per_meter',)
     search_fields = ('name',)
     list_filter = ('price_per_meter',)
 
 
 @admin.register(Frequency)
-class FrequencyAdmin(SimpleHistoryAdmin):
+class FrequencyAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name',)
     search_fields = ('name',)
 
 
 @admin.register(DiscountCode)
-class DiscountCodeAdmin(SimpleHistoryAdmin):
+class DiscountCodeAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_display = ('id', 'name', 'code', 'is_active',)
     search_fields = ('name', 'code')
     list_filter = ('number_of_uses', 'is_active')
