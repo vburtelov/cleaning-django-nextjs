@@ -126,6 +126,7 @@ const Form = () => {
                             {auth.errors.login}
                         </Typography>
                         {auth.success.verify && <><Typography color={'success'}> Почта подтверждена</Typography></>}
+                        {auth.success.register && <><Typography color={'success'}>Подтвердите почту</Typography></>}
                     </Grid>
                     <Grid item container xs={12}>
                         <Box
