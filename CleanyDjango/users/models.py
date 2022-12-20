@@ -33,6 +33,7 @@ class CustomUser(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'surname', 'phone_number']
+    is_active = models.BooleanField(default=False, verbose_name="Аккаунт активен?")
 
     objects = CustomUserManager()
 
