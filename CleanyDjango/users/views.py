@@ -4,14 +4,19 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST, HTTP_200_OK
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer, CustomUserCreateSerializer, CustomUserUpdateSerializer, \
-    CustomUserUpdatePasswordSerializer
+    CustomUserUpdatePasswordSerializer, LoginSerializer
 from users.task import send_verification_email
+
+
+class LoginView(TokenObtainPairView):
+    serializer_class = LoginSerializer
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
