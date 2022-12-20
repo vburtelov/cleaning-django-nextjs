@@ -27,16 +27,6 @@ const pages = [
     href: '/account/security',
     title: 'Безопасность',
   },
-  {
-    id: 'notifications',
-    href: '/account/notifications',
-    title: 'Уведомления',
-  },
-  {
-    id: 'billing',
-    href: '/account/billing',
-    title: 'Платежные данные',
-  },
 ];
 
 const Page = ({ children }) => {
