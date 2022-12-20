@@ -18,7 +18,7 @@ const WhoWeAre = () => {
           <Grid
               item
               container
-              alignItems={'center'}
+              alignItems={'start'}
               justifyContent="center"
               xs={12}
               md={6}
@@ -44,7 +44,7 @@ const WhoWeAre = () => {
               item
               container
               justifyContent="center"
-              alignItems="center"
+              alignItems="start"
               xs={12}
               md={6}
           >
