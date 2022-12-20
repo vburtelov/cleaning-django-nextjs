@@ -137,7 +137,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isLoading = false;
       state.me = null;
-      state.errors.login = action.payload;
+      state.errors.login = action.payload.detail;
       state.appLoaded = true;
       state.success = initialState.success;
     },

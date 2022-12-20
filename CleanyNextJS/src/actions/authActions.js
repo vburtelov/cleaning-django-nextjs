@@ -126,7 +126,7 @@ export const loginUserWithEmail = (formData) => async (dispatch) => {
         dispatch(LOGIN_WITH_EMAIL_SUCCESS(res.data));
         dispatch(loadMe());
       }).catch((err) => {
-      dispatch(LOGIN_WITH_EMAIL_FAIL('Не верный логин или пароль'));
+      dispatch(LOGIN_WITH_EMAIL_FAIL(err.response.data));
       return err.response;
     });
   }
