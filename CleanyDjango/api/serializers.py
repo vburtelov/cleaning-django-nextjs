@@ -57,7 +57,6 @@ class CleanerCalendarSerializer(serializers.ModelSerializer):
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Order
         exclude = ('user', 'status',)
@@ -70,6 +69,7 @@ class OrderSerializer(serializers.ModelSerializer):
     cleaner = CleanerSerializer()
     discount_code = DiscountCodeSerializer()
     extra_services = ExtraServiceSerializer(many=True)
+    price = serializers.ReadOnlyField()
 
     class Meta:
         model = Order
