@@ -36,6 +36,7 @@ class DiscountCode(models.Model):
     discount = models.IntegerField(verbose_name="Скидка", default=0)
     number_of_uses = models.IntegerField(default=0, verbose_name="Количество использований")
     is_active = models.BooleanField(default=False, verbose_name="Активный")
+    is_visible = models.BooleanField(default=False, verbose_name="Видимый")
     history = HistoricalRecords()
 
     def __str__(self):
@@ -65,6 +66,8 @@ class Cleaner(models.Model):
 
 class TypeOfCleaning(models.Model):
     name = models.CharField(max_length=45, verbose_name="Название")
+    description = models.CharField(max_length=255, verbose_name="Описание", default="")
+    image_url = models.CharField(max_length=255, verbose_name="Ссылка на изображение", default="")
     price_per_meter = models.IntegerField(verbose_name="Цена за квадратный метр")
     basic_services = models.ManyToManyField(BasicService, verbose_name="Доступные базовые услуги")
     extra_services = models.ManyToManyField(ExtraService, verbose_name="Доступные дополнительные услуги")
@@ -107,7 +110,6 @@ class Order(models.Model):
     street = models.CharField(max_length=255, verbose_name="Улица")
     house = models.CharField(max_length=255, verbose_name="Дом")
     apartment = models.CharField(max_length=255, verbose_name="Квартира")
-
     date = models.DateField(verbose_name="Дата уборки")
     time = models.ForeignKey(
         CleaningTime,
@@ -154,10 +156,19 @@ class Order(models.Model):
     status = models.CharField(max_length=255, verbose_name="Статус заказа")
 
     extra_services = models.ManyToManyField(ExtraService, blank=True, verbose_name="Дополнительные услуги")
-
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()
+
+    @property
+    def price(self):
+        price = self.type.price_per_meter * self.square
+        for service in self.extra_services.all():
+            price += service.price
+        if self.discount_code:
+            price -= self.discount_code.discount
+        return price
+
 
     def __str__(self):
         return f'Заказ на {self.street} {self.date}'
