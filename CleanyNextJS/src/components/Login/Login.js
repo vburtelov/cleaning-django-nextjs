@@ -90,7 +90,7 @@ const Login = () => {
                         component={LazyLoadImage}
                         effect='blur'
                         src={
-                          'https://assets.maccarianagency.com/backgrounds/img18.jpg'
+                          'https://global-uploads.webflow.com/5e066fbd0d37a10ebf1f4139/62a2399b4c8975627d8f4e4e_shutterstock_1966984102.jpg'
                         }
                         height={{ xs: 'auto', md: 1 }}
                         maxHeight={{ xs: 300, md: 1 }}
