@@ -1,7 +1,7 @@
 // next.config.js
 module.exports = {
     images: {
-          domains: ['assets.maccarianagency.com'],
+          domains: ['assets.maccarianagency.com', 'cdn.cloud.qlean.ru'],
     },
     webpackDevMiddleware: config => {
         config.watchOptions = {
