@@ -9,6 +9,7 @@ import {
   Gallery,
   Hero,
   Partners,
+  PromoList,
   Story,
   Team,
   WhoWeAre,
@@ -21,6 +22,9 @@ const Promo = () => {
       <Hero
         imgSrc='https://клинингпервоуральск.рф/images/2019/12/10/slider3.jpg'
         h2Text='УБОРКА ДЛЯ ВАС' btnText='Оставить заявку' />
+      <Container>
+        <PromoList />
+      </Container>
       <Container>
         <Story />
       </Container>
