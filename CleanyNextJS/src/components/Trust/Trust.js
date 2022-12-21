@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-const Partners = () => {
+const Trust = () => {
   return (
     <Box>
       <Grid container spacing={4}>
@@ -39,4 +39,4 @@ const Partners = () => {
   );
 };
 
-export default Partners;
+export default Trust;
