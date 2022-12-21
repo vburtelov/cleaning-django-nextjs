@@ -71,6 +71,12 @@ class ExtraServiceViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
 
 
+class DiscountCodeViewSet(viewsets.ModelViewSet):
+    queryset = DiscountCode.objects.filter(is_visible=True)
+    serializer_class = DiscountCodeSerializer
+    http_method_names = ['get']
+
+
 class BasicServiceViewSet(viewsets.ModelViewSet):
     queryset = BasicService.objects.all()
     serializer_class = BasicServiceSerializer
@@ -86,12 +92,13 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Order.objects.filter(user=self.request.user)
+            return Order.objects.filter(user=self.request.user).order_by('-created_time')
         else:
             return Order.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
