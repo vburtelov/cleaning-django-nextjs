@@ -12,12 +12,16 @@ import 'react-image-lightbox/style.css';
 import 'aos/dist/aos.css';
 import { verifyToken } from '../actions/authActions';
 import { getCleaners } from '../actions/cleanerActions';
+import {getPromos} from "../actions/promoActions";
+import {getTypes} from "../actions/typeActions";
 
 export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     store.dispatch(verifyToken());
     store.dispatch(getCleaners());
+    store.dispatch(getPromos());
+    store.dispatch(getTypes());
   }, []);
 
   return (
