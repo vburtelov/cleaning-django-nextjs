@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 const OrderGeneralPage = () => {
   const auth = useSelector((state) => state.auth);
   const router = useRouter();
-  {!auth.isAuthenticated ? (router.push('/')) : null}
+  {!auth.isAuthenticated ? (router.push('/login')) : null}
   return <>
     {auth.isAuthenticated ? <OrderGeneral /> : <Loader />}
   </>;
