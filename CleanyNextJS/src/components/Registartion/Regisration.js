@@ -100,7 +100,7 @@ const Registration = () => {
                         component={LazyLoadImage}
                         effect='blur'
                         src={
-                          'https://assets.maccarianagency.com/backgrounds/img4.jpg'
+                          'https://ocdn.eu/images/pulscms/NmI7MDA_/08eda8a855869673a8b80a89796f16ac.jpg'
                         }
                         height={{ xs: 'auto', md: 1 }}
                         maxHeight={{ xs: 300, md: 1 }}
