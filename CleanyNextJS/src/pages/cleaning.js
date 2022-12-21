@@ -13,8 +13,8 @@ import {
     Team,
     WhoWeAre,
     Application,
+    CleaningTypes,
 } from '../components';
-import CleaningTypes from "../components/CleaningTypes";
 
 const Cleaning = () => {
     return (
